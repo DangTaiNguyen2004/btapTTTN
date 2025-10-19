@@ -1,0 +1,73 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Thanh menu */
+nav {
+  background-color: #05ca36;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* Từng mục menu */
+nav ul li {
+  position: relative;
+}
+
+nav ul li a {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* khoảng cách giữa icon và chữ */
+  padding: 15px 25px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+nav ul li a i {
+  font-size: 16px;
+}
+
+/* Hiệu ứng hover */
+nav ul li a:hover {
+  background-color: #06c235;
+  color: #ffd700;
+}
+
+/* Gạch chân hiệu ứng */
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: #ffd700;
+  transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+  width: 50%;
+}
+
+/* Mục đang chọn */
+nav ul li a.active {
+  color: #ffd700;
+}
