@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nội thất Hoàng Hoan</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    .category {
+      background: #fff;
+      border-radius: 10px;
+      margin: 25px auto;
+      width: 90%;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .category-header h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #1d1765;
+      font-weight: bold;
+    }
+    .category-header a {
+      color: blue;
+      font-size: 14px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .category-header a:hover {
+      text-decoration: underline;
+    }
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .product {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 220px;
+      padding: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .product:hover {
+      transform: translateY(-5px);
+    }
+    .product img {
+      width: 100%;
+      height: 160px;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+    .product h3 {
+      font-size: 15px;
+      margin: 10px 0 5px;
+      color: #333;
+    }
+    .stars {
+      color: #ffcc00;
+      font-size: 13px;
+      margin: 5px 0;
+    }
+    .product .old-price {
+      text-decoration: line-through;
+      color: #888;
+      font-size: 13px;
+    }
+    .product .price {
+      color: #e91e63;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+
+  <script src="data/categories.js"></script>
+  <script src="data/products.js"></script>
+  <script>
+    const container = document.getElementById("container");
+
+    categories.forEach(cat => {
+      const section = document.createElement("div");
+      section.classList.add("category");
+      section.innerHTML = `
+        <div class="category-header">
+          <h2>${cat.name}</h2>
+          <a href="#" class="show-all" data-id="${cat.id}">Xem tất cả</a>
+        </div>
+        <div class="product-list" id="cat-${cat.id}"></div>
+      `;
+      container.appendChild(section);
+
+      const list = section.querySelector(".product-list");
+      const filtered = products.filter(p => p.categoryId === cat.id);
+
+      // Hiển thị tối đa 4 sản phẩm đầu tiên
+      filtered.slice(0, 4).forEach(p => {
+        list.appendChild(createProduct(p));
+      });
+
+      // Gắn sự kiện "Xem tất cả"
+      section.querySelector(".show-all").addEventListener("click", (e) => {
+        e.preventDefault();
+        list.innerHTML = "";
+        filtered.forEach(p => list.appendChild(createProduct(p)));
+      });
+    });
+
+    function createProduct(p) {
+      const div = document.createElement("div");
+      div.classList.add("product");
+      div.innerHTML = `
+        <img src="${p.image}" alt="${p.name}">
+        <h3>${p.name}</h3>
+        <div class="stars">★★★★★</div>
+        <div class="old-price">${p.oldPrice.toLocaleString()} VND</div>
+        <div class="price">${p.price.toLocaleString()} VND</div>
+      `;
+      return div;
+    }
+  </script>
+</body>
+</html>
